@@ -1,0 +1,87 @@
+#!/bin/bash
+
+# 0XVENOM - Enhanced Network Intrusion Detection System Launcher
+# Make this script executable with: chmod +x 0xvenom
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+MAGENTA='\033[0;35m'
+CYAN='\033[0;36m'
+NC='\033[0m' # No Color
+
+# Banner
+echo -e "${RED}╔══════════════════════════════════════════════════════════════════════════════╗${NC}"
+echo -e "${RED}║                                                                              ║${NC}"
+echo -e "${RED}║  ${GREEN}  ██████╗ ██╗  ██╗██╗   ██╗███████╗███╗   ██╗ ██████╗ ███╗   ███╗        ${RED}║${NC}"
+echo -e "${RED}║  ${GREEN} ██╔═████╗╚██╗██╔╝██║   ██║██╔════╝████╗  ██║██╔═══██╗████╗ ████║        ${RED}║${NC}"
+echo -e "${RED}║  ${GREEN} ██║██╔██║ ╚███╔╝ ██║   ██║█████╗  ██╔██╗ ██║██║   ██║██╔████╔██║        ${RED}║${NC}"
+echo -e "${RED}║  ${GREEN} ████╔╝██║ ██╔██╗ ╚██╗ ██╔╝██╔══╝  ██║╚██╗██║██║   ██║██║╚██╔╝██║        ${RED}║${NC}"
+echo -e "${RED}║  ${GREEN} ╚██████╔╝██╔╝ ██╗ ╚████╔╝ ███████╗██║ ╚████║╚██████╔╝██║ ╚═╝ ██║        ${RED}║${NC}"
+echo -e "${RED}║  ${GREEN}  ╚═════╝ ╚═╝  ╚═╝  ╚═══╝  ╚══════╝╚═╝  ╚═══╝ ╚═════╝ ╚═╝     ╚═╝        ${RED}║${NC}"
+echo -e "${RED}║                                                                              ║${NC}"
+echo -e "${RED}║  ${CYAN}            Enhanced Network Intrusion Detection System                  ${RED}║${NC}"
+echo -e "${RED}║  ${YELLOW}        🚀 Real-time Monitoring | 💾 Model Persistence | 🌐 Web UI      ${RED}║${NC}"
+echo -e "${RED}║  ${MAGENTA}                    Author: Adarsh Kumar Singh                          ${RED}║${NC}"
+echo -e "${RED}║                                                                              ║${NC}"
+echo -e "${RED}╚══════════════════════════════════════════════════════════════════════════════╝${NC}"
+
+# Check if Python 3 is installed
+if ! command -v python3 &> /dev/null; then
+    echo -e "${RED}[ERROR] Python 3 is not installed or not in PATH${NC}"
+    exit 1
+fi
+
+# Get the directory where this script is located
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
+# Check for special commands
+if [ "$1" = "--web" ] || [ "$1" = "-w" ]; then
+    echo -e "${GREEN}[INFO] Starting web interface...${NC}"
+    echo -e "${CYAN}[INFO] Installing/checking dependencies...${NC}"
+    
+    # Install required packages
+    python3 -c "import streamlit, plotly" 2>/dev/null
+    if [ $? -ne 0 ]; then
+        echo -e "${YELLOW}[WARNING] Installing web interface dependencies...${NC}"
+        pip3 install streamlit plotly
+    fi
+    
+    # Launch web interface using the Python launcher
+    python3 "$SCRIPT_DIR/launch_web.py"
+    
+elif [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
+    echo -e "${CYAN}0XVENOM - Enhanced Network Intrusion Detection System${NC}"
+    echo ""
+    echo -e "${YELLOW}Usage:${NC}"
+    echo "  ./0xvenom [options]"
+    echo ""
+    echo -e "${YELLOW}Options:${NC}"
+    echo "  --web, -w                 Start web interface"
+    echo "  --train <file>            Training dataset"
+    echo "  --test <file>             Testing dataset"
+    echo "  --monitor                 Start real-time monitoring"
+    echo "  --list-models             List saved models"
+    echo "  --load-model <file>       Load a saved model"
+    echo "  --detailed                Show detailed analysis"
+    echo "  --help, -h                Show this help message"
+    echo ""
+    echo -e "${YELLOW}Examples:${NC}"
+    echo "  ./0xvenom --web                                    # Start web interface"
+    echo "  ./0xvenom --train data/train.csv --test data/test.csv  # Train models"
+    echo "  ./0xvenom --monitor --duration 300                 # Monitor for 5 minutes"
+    echo ""
+else
+    # Check and install CLI dependencies
+    echo -e "${CYAN}[INFO] Checking CLI dependencies...${NC}"
+    python3 -c "import pandas, sklearn, numpy, tabulate, colorama, joblib" 2>/dev/null
+    if [ $? -ne 0 ]; then
+        echo -e "${YELLOW}[WARNING] Installing CLI dependencies...${NC}"
+        pip3 install pandas scikit-learn numpy tabulate colorama joblib
+    fi
+    
+    # Run the Python script with all arguments
+    python3 "$SCRIPT_DIR/scripts/0xvenom.py" "$@"
+fi
