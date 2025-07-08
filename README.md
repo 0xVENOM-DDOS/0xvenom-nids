@@ -2,7 +2,7 @@
 
 A powerful and intelligent command-line **Network Intrusion Detection System (NIDS)** using **Machine Learning**, designed to detect unauthorized and malicious network activities with high accuracy.
 
-> 🎥 **Working Demo Video**: [Watch on YouTube]([https://youtu.be/0nzCvcOMxAw](https://www.youtube.com/watch?v=0nzCvcOMxAw))
+> 🎥 **Working Demo Video**: [Watch on YouTube](https://www.youtube.com/watch?v=0nzCvcOMxAw)
 
 ---
 
