@@ -4,7 +4,7 @@ A powerful and intelligent command-line **Network Intrusion Detection System (NI
 
 > 🎥 **Working Demo Video**: [Watch on YouTube](https://www.youtube.com/watch?v=0nzCvcOMxAw)
 
----
+-------
 
 ## 🚀 Features
 
